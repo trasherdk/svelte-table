@@ -129,32 +129,21 @@
         {/each}
       </tr>
     {/if}
-    <slot name="header" sortOrder={sortOrder} sortBy={sortBy}>
-      <tr>
-        {#each columns as col}
-          {#if col.sortable}
+      <slot name="header" sortOrder={sortOrder} sortBy={sortBy}>
+        <tr>
+          {#each columns as col}
             <th
               on:click={(e) => handleClickCol(e, col)}
-              class={asStringArray(['isSortable', col.headerClass])}
+              class={asStringArray([col.sortable ? 'isSortable' : null, col.headerClass])}
             >
               {col.title}
               {#if sortBy === col.key}
                 { sortOrder === 1 ? iconAsc : iconDesc}
               {/if}
             </th>
-          {:else}
-            <th
-              class={col.headerClass}
-            >
-              {col.title}
-              {#if sortBy === col.key}
-                { sortOrder === 1 ? iconAsc : iconDesc}
-              {/if}
-            </th>
-          {/if}
-        {/each}
-      </tr>
-    </slot>
+          {/each}
+        </tr>
+      </slot>
   </thead>
   <tbody class={asStringArray(classNameTbody)}>
     {#each c_rows as row, n}
